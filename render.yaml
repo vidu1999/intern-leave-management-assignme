@@ -1,0 +1,36 @@
+# Render Blueprint - one web service that serves the API and the React app.
+#
+#   1. Push this repository to GitHub.
+#   2. Render Dashboard -> New -> Blueprint -> pick the repo.
+#   3. Render reads this file, builds, and gives you https://<name>.onrender.com
+#
+# IMPORTANT: the persistent `disk` block keeps the SQLite file across deploys.
+# Disks require a paid instance type. Without a disk the app still works, but
+# the database resets on every redeploy/restart (it lives on ephemeral storage).
+services:
+  - type: web
+    name: leavemanager
+    runtime: node
+    plan: starter
+    region: singapore
+    branch: main
+    buildCommand: npm ci --prefix server && npm ci --prefix client && npm run build --prefix client
+    startCommand: node server/src/server.js
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"
+      - key: HOST
+        value: 0.0.0.0
+      - key: DATABASE_FILE
+        value: /var/data/leave_manager.db
+      # Leave empty: the SPA is served from the same origin as the API.
+      - key: CLIENT_ORIGIN
+        value: ""
+    disk:
+      name: leavemanager-data
+      mountPath: /var/data
+      sizeGB: 1

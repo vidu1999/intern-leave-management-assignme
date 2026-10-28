@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-page text-ink antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand/45 ring-offset-2 ring-offset-white;
+  }
+
+  /* Slim, enterprise-looking scrollbars inside data tables. */
+  .scroll-area {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+  }
+  .scroll-area::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  .scroll-area::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-slate-300;
+  }
+  .scroll-area::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer components {
+  .card {
+    @apply min-w-0 rounded-2xl border border-line bg-white shadow-card;
+  }
+
+  .table-shell {
+    @apply w-full overflow-hidden rounded-xl border border-line;
+  }
+
+  .data-table {
+    @apply w-full min-w-[720px] border-collapse text-left text-sm;
+  }
+
+  .data-table thead th {
+    @apply whitespace-nowrap border-b border-line bg-slate-50/80 px-3.5 py-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted;
+  }
+
+  .data-table tbody td {
+    @apply border-b border-line/80 px-3.5 py-3.5 align-middle text-[13.5px] text-ink;
+  }
+
+  .data-table tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  .data-table tbody tr {
+    @apply transition-colors hover:bg-slate-50/70;
+  }
+
+  .data-table tbody tr:hover td.sticky {
+    @apply bg-slate-50;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-[13px] font-medium text-ink;
+  }
+
+  .field-control {
+    @apply w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm text-ink shadow-[0_1px_1px_rgba(15,27,51,0.03)] transition
+      placeholder:text-slate-400 hover:border-slate-300 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20;
+  }
+
+  .field-control-error {
+    @apply border-danger/70 focus:border-danger focus:ring-danger/20;
+  }
+}
